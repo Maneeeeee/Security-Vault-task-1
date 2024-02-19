@@ -18,7 +18,7 @@ def generate_password(length):
     password = list(password)
     random.shuffle(password)
     password = "".join(password)
-    with open("generatedPassword․txt", "a") as file:
+    with open("generatedPassword.txt", "a") as file:
         file.write(password + "\n")
     return
 
