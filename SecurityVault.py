@@ -24,28 +24,24 @@ def generate_password(length):
 
 
 def is_common(password, file_path):
-    start_time = time.perf_counter()
     count = 0
     with open(file_path, "r") as file:
         for line in file:
             count += 1
             if password == line:
-                end_time = time.perf_counter() - start_time
-                print(f"It takes {end_time} seconds")
                 return True
-    end_time = time.perf_counter() - start_time
-    print(f"It takes {end_time} seconds")
     return False
 
 
-def delete_file_content(file):
-    with open(file, "w"):
+def delete_file_content(file_path):
+    with open(file_path, "w"):
         file.seek(0)
         file.write("")
 
 for i in range(30):
     generate_password(random.randint(12,16))
 
+start_time = time.perf_counter()
 for i in range(30):
     with open("generatedPassword.txt", "r") as file:
         for password in file:
@@ -56,4 +52,6 @@ for i in range(30):
                 sys.exit()
             else:
                 print(f"Password was not found ")
+time = time.perf_counter() - start_time
+print(f"It takes {time} seconds")
 delete_file_content("generatedPassword.txt")
