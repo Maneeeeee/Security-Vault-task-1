@@ -33,7 +33,7 @@ def is_common(password, file_path):
     return False
 
 
-def delete_file_content(file_path):
+def delete_file_content(file_path) as file:
     with open(file_path, "w"):
         file.seek(0)
         file.write("")
