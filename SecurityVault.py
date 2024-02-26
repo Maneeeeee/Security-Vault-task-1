@@ -1,9 +1,6 @@
 import random
-import sys
 import time
 import string
-
-
 
 count = 0
 
@@ -18,16 +15,19 @@ def generate_password(length):
     password = list(password)
     random.shuffle(password)
     password = "".join(password)
-    with open("generatedPassword.txt", "a") as file:
-        file.write(password + "\n")
-    return
+    return password
+
+def write_in_file(length, n):
+    with open("generatedPassword.txt", "w") as file:
+        while n > 0:
+            file.write(generate_password(length) + "\n")
+            n -= 1
+        return
 
 
 def is_common(password, file_path):
-    count = 0
     with open(file_path, "r") as file:
         for line in file:
-            count += 1
             if password == line:
                 return True
     return False
@@ -38,20 +38,14 @@ def delete_file_content(file_path):
         file.seek(0)
         file.write("")
 
-for i in range(30):
-    generate_password(random.randint(12,16))
-
 start_time = time.perf_counter()
-for i in range(30):
-    with open("generatedPassword.txt", "r") as file:
-        for password in file:
-            is_common_password = is_common(password, "commonPassword.txt")
-            if is_common_password:
-                print(f"Password was found, it takes {count} tries ")
-                delete_file_content("generatedPassword.txt")
-                sys.exit()
-            else:
-                print(f"Password was not found ")
+with open("generatedPassword.txt", "r") as file:
+    for password in file:
+        if  is_common(password, "commonPassword.txt"):
+            print(f"Password was found, it takes tries ")
+            break
+        else:
+            print(f"Password was not found ")
 time = time.perf_counter() - start_time
 print(f"It takes {time} seconds")
-delete_file_content("generatedPassword.txt")
+# delete_file_content("generatedPassword.txt")
